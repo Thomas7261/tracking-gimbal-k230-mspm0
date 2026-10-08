@@ -4,7 +4,7 @@
  * 坐标约定：
  *   K230 图像 cx 向右为正，cy 向下为正。
  *   摄像头逆时针旋转 90 度后，A 轴使用 cy 误差，B 轴使用 cx 误差。
- *   实机确认的电机命令方向：
+ *   电机命令方向：
  *     A+：底座向右，A-：底座向左。
  *     B+：摄像头向上，B-：摄像头向下。
  *
@@ -26,13 +26,7 @@
 #include "usart.h"
 #include "yb_protocol.h"
 
-/* ============================== 可调参数 ==============================
- * 调参顺序建议：
- *   1. 先调 SPEED_GAIN，决定“同样误差下愿意转多快”；
- *   2. 再调 MAX_TRACKING_RPM，限制最高转速；
- *   3. 最后调 ERROR_RATE_LOOKAHEAD 和 SPEED_BRAKE，处理急停过冲。
- * 每次只改一个参数，并保留一次实机现象或串口记录。
- * ==================================================================== */
+/* ============================== 控制参数 ============================== */
 #define FRAME_CENTER_X                    160.0f
 #define FRAME_CENTER_Y                    120.0f
 
@@ -43,7 +37,7 @@
 #define SPEED_GAIN_A                        0.35f
 #define SPEED_GAIN_B                        0.35f
 
-/* 当前硬件的保守速度上限，后续可以按实机表现调整。 */
+/* 最大跟踪速度。 */
 #define MAX_TRACKING_RPM_A                  30.0f
 #define MAX_TRACKING_RPM_B                  30.0f
 #define MIN_TRACKING_RPM                     3.0f
@@ -291,7 +285,7 @@ static void Tracking_UpdateRequestedSpeeds(
     cy = (float)observation->y + ((float)observation->h * 0.5f);
 
     /*
-     * 实机标定结果：
+     * 轴方向映射：
      *   A+ 使 cy 减小，因此 A 轴速度与 cy 误差同号。
      *   B+ 使 cx 减小，因此 B 轴速度与 cx 误差同号。
      */

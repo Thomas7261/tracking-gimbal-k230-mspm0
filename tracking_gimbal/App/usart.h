@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include "ti_msp_dl_config.h"
 
-/* UART0 从 K230 收到的原始字节总数，用于阶段 3 联调诊断。 */
+/* UART0 从 K230 收到的原始字节总数，用于通信诊断。 */
 extern volatile uint32_t Uart0_RxByteCount;
 
 /* 初始化 UART1 的调试接收中断。 */
