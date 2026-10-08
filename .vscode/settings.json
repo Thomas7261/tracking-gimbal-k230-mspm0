@@ -1,0 +1,7 @@
+{
+    "python.analysis.stubPath": "${env:USERPROFILE}\\.kendryte\\k230_canmv_pylance\\bd2b2d5c3919fd2a\\typings",
+    "python.analysis.extraPaths": [
+        "${env:USERPROFILE}\\.kendryte\\k230_canmv_stubs\\8f620e570e90363678bd2fb9fdb22f4e16ba8fbf"
+    ],
+    "python-envs.defaultEnvManager": "ms-python.python:system"
+}
